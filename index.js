@@ -2,7 +2,7 @@ const cors = require('cors');
 const express = require('express');
 
 const errors = require('./errors.json');
-const port = process.env.PORT || 3002;
+const port = process.env.PORT || 3003;
 
 const authorizationMiddleware = require('./middlewares/authorization');
 const settingsRouter = require('./routes/settings');
