@@ -1,0 +1,6 @@
+{
+    "AKEY_MISMATCH": {
+        "code": 403,
+        "message": "AKey does not match with given URL param"
+    }
+}
