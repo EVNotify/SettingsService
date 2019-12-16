@@ -1,4 +1,4 @@
-const asyncHandler = require('../utils/asyncHandler');
+const asyncHandler = require('@evnotify/utils').asyncHandler;
 const SettingsModel = require('../models/Settings');
 const errors = require('../errors.json');
 
