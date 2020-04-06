@@ -17,7 +17,7 @@ const SettingsSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    autoSOC: {
+    auto_soc: {
         type: Boolean,
         default: false
     },
@@ -25,7 +25,7 @@ const SettingsSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    SOCThreshold: {
+    soc_threshold: {
         type: Number,
         required: true,
         default: 70
@@ -37,7 +37,7 @@ const SettingsSchema = new mongoose.Schema({
     },
     car: {
         type: String,
-        required: true
+        default: ''
     },
     capacity: {
         type: Number,
@@ -47,11 +47,11 @@ const SettingsSchema = new mongoose.Schema({
     consumption: {
         type: Number,
         required: true,
-        default: 12
+        default: 15
     },
     device: {
         type: String,
-        required: false
+        default: ''
     }
 }, options);
 
