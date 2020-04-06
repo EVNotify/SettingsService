@@ -2,10 +2,24 @@ const asyncHandler = require('@evnotify/utils').asyncHandler;
 const SettingsModel = require('../models/Settings');
 const errors = require('../errors.json');
 
-const replaceOrCreateSettings = asyncHandler(async (req, res, next) => {
+const akeyMismatch = (settingsAKey, paramAKey) => settingsAKey != null && settingsAKey != paramAKey;
+
+const getSettings = asyncHandler(async(req, res, next) => {
+    res.json(await SettingsModel.findOneAndUpdate({
+        akey: req.params.akey
+    }, {
+        akey: req.params.akey
+    }, {
+        upsert: true,
+        new: true,
+        setDefaultsOnInsert: true
+    }).select('-_id -createdAt'));
+});
+
+const updateSettings = asyncHandler(async(req, res, next) => {
     const settingsObj = req.body || {};
 
-    if (settingsObj.akey != null && settingsObj.akey != req.params.akey) return next(errors.AKEY_MISMATCH);
+    if (akeyMismatch(settingsObj.akey, req.params.akey)) return next(errors.AKEY_MISMATCH);
 
     settingsObj.akey = req.params.akey;
 
@@ -13,32 +27,21 @@ const replaceOrCreateSettings = asyncHandler(async (req, res, next) => {
         akey: settingsObj.akey
     }, settingsObj, {
         upsert: true,
-        new: true
-    }));
+        new: true,
+        setDefaultsOnInsert: true
+    }).select('-_id -createdAt'));
 });
 
-const getSettings = asyncHandler(async(req, res, next) => {
-    res.json(await SettingsModel.findOne({
+const deleteSettings = asyncHandler(async(req, res, next) => {
+    await SettingsModel.deleteOne({
         akey: req.params.akey
-    }));
-});
+    });
 
-const updateSettings = asyncHandler(async(req, res, next) => {
-    const settingsObj = req.body || {};
-
-    if (settingsObj.akey != null && settingsObj.akey != req.params.akey) return next(errors.AKEY_MISMATCH);
-
-    settingsObj.akey = req.params.akey;
-
-    res.json(await SettingsModel.updateOne({
-        akey: settingsObj.akey
-    }, settingsObj, {
-        new: true
-    }));
+    res.status(204).end();
 });
 
 module.exports = {
-    replaceOrCreateSettings,
     getSettings,
-    updateSettings
+    updateSettings,
+    deleteSettings
 };
