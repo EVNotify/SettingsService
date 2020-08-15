@@ -49,6 +49,12 @@ const SettingsSchema = new mongoose.Schema({
         required: true,
         default: 15
     },
+    range_unit: {
+        type: String,
+        required: false,
+        default: 'km',
+        enum: ['km', 'mi']
+    },
     device: {
         type: String,
         default: ''
