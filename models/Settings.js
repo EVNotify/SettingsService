@@ -49,6 +49,12 @@ const SettingsSchema = new mongoose.Schema({
         required: true,
         default: 15
     },
+    consumption_unit: {
+        type: String,
+        required: false,
+        default: 'kWh',
+        enum: ['kWh', 'Wh']
+    },
     range_unit: {
         type: String,
         required: false,
