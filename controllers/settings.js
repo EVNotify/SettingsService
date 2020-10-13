@@ -21,7 +21,7 @@ const getSettings = asyncHandler(async(req, res, next) => {
 const updateSettings = asyncHandler(async(req, res, next) => {
     const settingsObj = req.body || {};
 
-    if (req.params.akey != req.headers.AKey) return next(errors.AKEY_MISMATCH);
+    if (req.params.akey != req.headers.akey) return next(errors.AKEY_MISMATCH);
     if (akeyMismatch(settingsObj.akey, req.params.akey)) return next(errors.AKEY_MISMATCH);
 
     settingsObj.akey = req.params.akey;
@@ -36,7 +36,7 @@ const updateSettings = asyncHandler(async(req, res, next) => {
 });
 
 const deleteSettings = asyncHandler(async(req, res, next) => {
-    if (req.params.akey != req.headers.AKey) return next(errors.AKEY_MISMATCH);
+    if (req.params.akey != req.headers.akey) return next(errors.AKEY_MISMATCH);
 
     await SettingsModel.deleteOne({
         akey: req.params.akey
