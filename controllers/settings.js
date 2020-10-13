@@ -5,7 +5,7 @@ const errors = require('../errors.json');
 const akeyMismatch = (settingsAKey, paramAKey) => settingsAKey != null && settingsAKey != paramAKey;
 
 const getSettings = asyncHandler(async(req, res, next) => {
-    if (req.params.akey != req.headers.AKey) return next(errors.AKEY_MISMATCH);
+    if (req.params.akey != req.headers.akey) return next(errors.AKEY_MISMATCH);
 
     res.json(await SettingsModel.findOneAndUpdate({
         akey: req.params.akey
